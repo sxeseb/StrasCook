@@ -1,0 +1,91 @@
+{% extends 'layoutAdmin.html.twig' %}
+
+{% block title %}
+    EditMenu
+{% endblock %}
+
+{% block content %}
+    <section></section>
+    <div class="container">
+    <h5 class="card-header">{{ menu.name }}</h5>
+    <div class="card">
+        <div class="row p-3">
+        <div class="col-md-6">
+            <form action="/Admin/addImage/{{ menu.id }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="menu_img_src" id="menu_img_src" multiple="multiple"/>
+                <input type="checkbox" name="menu_thumb" aria-label="Checkbox">
+                <input type="submit" name="submit" id="submit" value="Nouvelle image" />
+                {% if imageErrors.menu_image %}
+                    <small id="menu_name_help" class="form-text text-danger">{{ imageErrors.menu_image }}</small>
+                {% endif %}
+            </form>
+        </div>
+        {% for image in images %}
+            <div class="col-md-2 pt-3">
+                <form action="/Admin/updateImage/{{ menu.id }}" method="post" enctype="multipart/form-data">
+                    <img src="{{ image.img_src }}" class="thumbnail" alt="image">
+                    <input type="checkbox" name="menu_thumb" aria-label="Checkbox">
+                    <button type="submit" id="submit" class="btn btn-secondary" multiple="multiple"
+                            href="/Admin/updateMenu/{{ menu.id }}">Modifier</button>
+                    <a type="submit" class="btn btn-secondary" href="/Admin/deleteOneImage/{{ image.id }}">Supprimer</a>
+                </form>
+            </div>
+        {% endfor %}
+        </div>
+            <form method= "post" action="/Admin/updateMenu/{{ menu.id }}">
+                <div class = "row p-3">
+                    <div class="form-group col-md-6">
+                        <label for="menu_name">Nom du menu</label>
+                        <input name="menu_name" type="text" class="form-control" id="menu_name"
+                               value="{% if menu.name %}{{ menu.name }}{% endif %}">
+                        {% if errors.menu_name %}
+                            <small id="menu_name_help" class="form-text text-danger">{{ errors.menu_name }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = "row pl-3 pr-3">
+                    <div class="form-group col-md-6">
+                        <label for="entree">Entrée</label>
+                        <textarea name="menu_starter" type="text" class="form-control" id="entree" rows="3"
+                        >{% if menu.starter %}{{ menu.starter }}{% endif %}</textarea>
+                        {% if errors.menu_starter %}
+                            <small id="menu_starter_help" class="form-text text-danger">{{ errors.menu_starter }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="plat">Plat</label>
+                        <textarea name="menu_main_course" type="text" class="form-control" id="plat" rows="3"
+                        >{% if menu.main_course %}{{ menu.main_course }}{% endif %}</textarea>
+                        {% if errors.menu_main_course %}
+                            <small id="menu_main_course_help" class="form-text text-danger">{{ errors.menu_main_course }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = "row pl-3 pr-3">
+                    <div class="form-group col-md-6">
+                            <label for="dessert">Dessert</label>
+                            <textarea name="menu_dessert" type="text" class="form-control" id="dessert" rows="3"
+                            >{% if menu.dessert %}{{ menu.dessert }}{% endif %}</textarea>
+                            {% if errors.menu_dessert %}
+                                <small id="menu_menu_dessert_help" class="form-text text-danger">{{ errors.menu_dessert }}</small>
+                            {% endif %}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="description">Description</label>
+                        <textarea name="menu_description" type="text" class="form-control" id="description" rows="3"
+                        >{% if menu.description %}{{ menu.description }}{% endif %}
+                </textarea>
+                    </div>
+                        {% if errors.menu_description %}
+                            <small id="menu_menu_description_help" class="form-text text-danger">{{ errors.menu_description }}</small>
+                        {% endif %}
+                    </div>
+                <div class="row pl-3 pb-3">
+                    <div class="col-md-6">
+                         <button type="submit" class="btn btn-secondary" href="/Admin/updateMenu/{{ menu.id }}">Editer</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+
+{% endblock %}

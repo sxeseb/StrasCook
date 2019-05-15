@@ -1,0 +1,51 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    A propos
+{% endblock %}
+{% block image_url %}/assets/images/about.jpg{% endblock %}
+{% block content %}
+    <div class="container text-center py-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="titre_index"><h1>A propos</h1></div>
+            </div>
+        </div>
+            <div class="row pt-5">
+                <div class="col-md-6 ">
+                    <img class="propos1" src="/assets/images/propos1.jpg"  alt="propos1">
+                </div>
+                <div class="col-md-6 text-justify">
+                    <p>Chef Gilles SAMUEL est avant tout un cuisinier autodidacte, qui
+                        a mis de côté son attaché-case au profit d'une mallette de couteaux.
+                        Sa carrière a commencé chez lui, après avoir acheté un référentiel de
+                        base de cuisine et un kit pour découvrir la cuisine moléculaire.
+                        Il découvre ensuite le milieu professionnel, en faisant des extras à
+                        l'Eveil des sens (Strasbourg). Puis se forme jusqu'à l'obtention d'un
+                        diplôme validant ses acquis professionnels. Il travaille alors dans
+                        différents établissements autour de Strasbourg, qui lui permette
+                        de découvrir ce qu'est la cuisine du marché. Son envie de voyage et
+                        de découvrir l'univers de la restauration gastronomique, l'emmène au
+                        restaurant Européa à Montréal pour y occuper un poste de Chef de Partie
+                        Tournant. L'établissement fait parti du réseau Relais&Château et Grandes
+                        Tables du Monde. Cette expérience est incroyablement riche en découvertes
+                        et réussites. Son envie de voyage lui reprend et l'emmène à poser ses
+                        bagages à Saint-Martin dans les Caraïbes. Cette fois-ci en tant que Chef à
+                        domicile. Il y cuisine de villas en villas, aussi prestigieuse les unes que
+                        les autres, pour satisfaire sa clientèle très exigeante et avide de
+                        nouveautés. De retour en Alsace, Gilles vous propose une cuisine moderne et
+                        raffinée, inspirée de ses voyages et évoluant au fil des saisons.
+                    </p>
+                </div>
+            <div class="col-md-6  p-5 text-justify">
+                <div class="souligner">Zones desservies :</div> <p> Strasbourg, cus </p>
+                <div class="souligner">Langues parlées :</div> <p>Français, Anglais</p>
+                <div class="souligner">Types de cuisine : </div>
+                    <p>Moléculaire, Gastronomique, Française, Asiatique, Thaïlandaise</p>
+            </div>
+            <div class="col-md-6 justify-content-end">
+                <img class="propos2" src="/assets/images/propos2.jpg"  alt="propos2">
+            </div>
+        </div>
+    </div>
+{% endblock %}

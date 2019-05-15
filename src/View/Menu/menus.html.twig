@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} TEST !!{% endblock %}
+
+{%  block content %}
+    <section>
+        <div class="container">
+            <div class="row">
+                {% for menu in menus %}
+                <div class="card mb-3 col-sm-12">
+                    <div class="row no-gutters">
+                        <div class=col-sm-4">
+                            <img class="card-img-top" src="..." alt="Card image cap">
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body">
+                                <h5 class="card-title"> {{ menu.name }}</h5>
+                                <p class="card-text">{{ menu.description }}</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}</div>
+        </div>
+    </section>
+{%  endblock %}

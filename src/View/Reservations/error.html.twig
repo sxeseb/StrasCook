@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <section>
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-8 offset-2 card p-4 text-center" >
+                    <div class="card-title">
+                        <h2>Nous avons rencontré un problème lors de votre validation !</h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Une erreur a été enregistrée !<br/>
+                            Vous pouvez retourner à la page des réservations en cliquant <a href="/reservation/reserver/">ici</a><br/>
+                            Vous pouvez également retourner à l'index par <a href="/home/index/">là</a></p>
+                        <p class="card-tetx">A très bientôt !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

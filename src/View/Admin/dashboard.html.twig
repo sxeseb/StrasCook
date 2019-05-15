@@ -1,0 +1,76 @@
+{% extends 'layoutAdmin.html.twig' %}
+{% block content %}
+    <section>
+        <div class="container py-5">
+            <div class="col-md-12 text-center">
+                <h1>Mon dashboard</h1>
+            </div>
+            <h3 class="card-title">Notifications</h3>
+            <div class="row justify-content-around text-white">
+                {% if menutoday.0.daysToDate < 1%}
+                    <div class="card alert bg-primary alert-dismissible text-center col-6 col-sm-5 px-0 pb-0">
+                        <div class="card-body">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Vous avez une reservation ce soir!</strong>
+                        </div>
+                        <div class="card-footer">
+                            <a class="text-white" href="/admin/reservations/{{ menutoday.0.id}}#infos">Voir les infos</a>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if menupending|length > 0%}
+                    <div class="card alert bg-success alert-dismissible text-center col-6 col-sm-5 px-0 pb-0">
+                        <div class="card-body">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>{{ menupending|length }} reservations en attente de validation.</strong>
+                        </div>
+                        <div class="card-footer">
+                            <a class="text-white" href="/admin/reservations">Réservations en attente</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container py-5">
+            <div class="row justify-content-around">
+                <div class="card col-12 col-sm-4 py-3">
+                    <h3 class="card-title">Ma semaine</h3>
+                    {% if thisweek is empty %}
+                    <div class="col-12">
+                        <div class="card-body">
+                            <p class="card-text">
+                                Pas de réservations cette semaine.
+                            </p>
+                        </div>
+                    </div>
+                    {% else  %}
+                    {% for menu in thisweek %}
+                            <div class="col-12">
+                                <div class="card text-center">
+                                    <div class="card-header">
+                                        <h2 class="display-4"><span class="badge badge-dark">{{ menu.day }} {{ menu.month }}</h2></div>
+                                    <div class="card-body text-dark">
+                                        <h3 class="text-uppercase"><strong>{{ menu.guests }} couverts</strong></h3>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item"><i class="fa fa-calendar-o mr-1" aria-hidden="true"></i>{{ menu.date }}</li>
+                                            <li class="list-inline-item"><i class="fa fa-clock-o mr-1" aria-hidden="true"></i> {{ menu.arrival}}<li>
+                                            <li class="list-inline-item"><i class="fa fa-location-arrow mr-1" aria-hidden="true"></i>{{ menu.place }}</li>
+                                        </ul>
+                                        <p>{{ menu.client }} </p>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor%}
+                    {% endif %}
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="card">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

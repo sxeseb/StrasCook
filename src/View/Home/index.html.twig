@@ -1,0 +1,92 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Stras'Cook - Accueil {% endblock %}
+
+{% block image_url %}/assets/images/index.jpg{%  endblock %}
+{% block content %}
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="titre_index"><h1>Présentation</h1></div>
+            </div>
+        </div>
+        <div class="row py-5">
+            <div class="col-md-4 text-justify">
+                <p>Le service de Strass'cook vous permet de recevoir vos invités autrement. Notre chef cuisine
+                    directement chez vous et s'occupe de tout. Vous n'avez qu'à mettre les pieds sous la table et
+                    profiter de vos convives, sans contrainte.
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="text-center"><img class = "presentation" src="/assets/images/presentation.jpg"
+                                            alt="presentation" ></p>
+            </div>
+            <div class="col-md-4 text-justify">
+                <p>Le chef Gilles répondra aux attentes de ses clients en mettant à disposition des plats
+                    savoureux et conviviaux. Deux choix dans chacun des menus vous sont proposés, un premier réalisé
+                    avec des produits de la grande consommation pour une somme de 20€ et le second avec des produits
+                    locaux, pour une somme de 30€.
+                    </p>
+            </div>
+        </div>
+    </div>
+<section class="menu">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="titre_menu"><h1>Menus</h1></div>
+            </div>
+            <div class="card-body text-white justify-content-center col-12 col-md-8 offset-md-2">
+                <p class="card-text text-justify ">Retrouvez un large choix de menus qui conviendront à tous les goûts et en toutes occasions ! <br/>
+                    Végétarien, Vegan, Omnivore ou encore notre menu du moment, le chef Gilles vous séduira par sa cuisine fine et originale.</p>
+                <p class="card-text">Laissez vous tenter !</p>
+            </div>
+        </div>
+
+        <div class="row py-5 justify-content-center">
+            {% for menu in session.menusList %}
+            <div class="col-md-3 ">
+                <div class="card-body text-center">
+                    <a href="/menu/show/{{ menu.id }}"><img class="rounded" src="{{ menu.img_src }}"  alt="menus"></a>
+                    <h3 class="card-text mt-3 text-white">{{ menu.name }}</h3>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row p-5">
+            <div class="col-md-12 text-center">
+                <a href="/reservation/reserver"> <button type="button" class="btn btn-outline-light">Réservations</button> </a>
+            </div>
+        </div>
+    </div>
+</section>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="titre_index"><h1>Partenariats</h1></div>
+                <div class="card-body justify-content-center col-12 col-md-8 offset-md-2">
+                    <p class="card-text text-justify ">Le chef Gilles travaille avec des producteurs locaux pour vous offrir une selection de produits frais et bios dans la formule locale. <br/>
+                    N'hésitez pas à consulter nos partenaires pour en apprendre plus sur nos produit.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="row text-center justify-content-center">
+            <div class="col-md-4">
+
+                    <img class="partenaire" src="/assets/images/amap1.png" alt="amap1">
+
+            </div>
+            <div class="col-md-4">
+
+                    <img class="partenairecocci" src="/assets/images/amap2.png" alt="amap2">
+
+            </div>
+            <div class="col-md-4">
+
+                    <img class="partenaire" src="/assets/images/amap3.png" alt="amap3">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

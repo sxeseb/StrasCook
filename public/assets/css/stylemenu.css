@@ -1,0 +1,203 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+.mb-60 {
+    margin-bottom: 60px;
+}
+.section-title p {
+    font-size: 24px;
+    font-family: Oleo Script;
+    margin-bottom: 0px;
+}
+.section-title h4 {
+    font-size: 40px;
+    text-transform: capitalize;
+    color: #054705;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 25px;
+}
+.section-title h4::before {
+    width: 80px;
+    height: 1.5px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -40px;
+}
+.section-title h4::before, .section-title h4::after {
+    position: absolute;
+    content: "";
+    background-color: #054705;
+}
+#myTabContent {
+    margin-top: 50px;
+}
+.menu_tab {
+    width: auto;
+    margin: 0 auto;
+}
+.nav-tabs .nav-item {
+    margin-bottom: -1px;
+}
+.menu_tab .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: white;
+    background-color: #054705;
+    border-color: #054705;
+}
+.single_menu_list {
+    position: relative;
+    padding-left: 190px;
+    margin-bottom: 110px;
+}
+
+.single_menu_list img {
+    max-width: 30%;
+    position: absolute;
+    left: 0px;
+    top: 0;
+    border: 1px solid #ddd;
+    padding: 3px;
+    border-radius: 50%;
+    transition: .4s
+}
+
+.single_menu_list:hover img {
+    border-radius: 0;
+    transition: .4s
+}
+
+.single_menu_list h4 {
+    font-size: 20px;
+    border-bottom: 1px dashed #333;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+}
+
+.single_menu_list h4 span {
+    float: right;
+    font-weight: bold;
+    color: #054705;
+    font-style: italic;
+}
+h2{
+    text-align:center;
+    padding: 20px;
+}
+/* Slider */
+
+.slick-slide {
+    margin: 0px 20px;
+}
+
+.slick-slide img {
+    width: 100%;
+}
+
+.slick-slider
+{
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list
+{
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.slick-list:focus
+{
+    outline: none;
+}
+.slick-list.dragging
+{
+    cursor: pointer;
+    cursor: hand;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list
+{
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.slick-track
+{
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+}
+.slick-track:before,
+.slick-track:after
+{
+    display: table;
+    content: '';
+}
+.slick-track:after
+{
+    clear: both;
+}
+.slick-loading .slick-track
+{
+    visibility: hidden;
+}
+
+.slick-slide
+{
+    display: none;
+    float: left;
+    height: 100%;
+    min-height: 1px;
+}
+[dir='rtl'] .slick-slide
+{
+    float: right;
+}
+.slick-slide img
+{
+    display: block;
+}
+.slick-slide.slick-loading img
+{
+    display: none;
+}
+.slick-slide.dragging img
+{
+    pointer-events: none;
+}
+.slick-initialized .slick-slide
+{
+    display: block;
+}
+.slick-loading .slick-slide
+{
+    visibility: hidden;
+}
+.slick-vertical .slick-slide
+{
+    display: block;
+    height: auto;
+    border: 1px solid transparent;
+}
+.slick-arrow.slick-hidden {
+    display: none;
+}

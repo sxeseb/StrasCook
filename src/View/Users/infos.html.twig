@@ -1,0 +1,115 @@
+{%  extends 'layout.html.twig' %}
+
+{% block title %} Stras'Cook - Reserver une prestation {% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container py-5">
+            <div class="col-10 offset-1 card p-4 text-center mb-4" >
+                <div class="card-title">
+                    <h2>Vos coordonnées</h2>
+                </div>
+                <div class="card-body">
+                    <h3>Comment ça marche ?</h3>
+                    <p class="card-text">Vous pouvez saisir ici vos coordonnées.<br/>
+                        Celles-ci seront utiles au Chef pour vous contacter et traiter au mieux votre réservation.<br/>
+                        Le Chef gère chaque réservation lui même, n'hésitez pas à lui laisser vos commentaires.</p>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <form action="/users/infos/" method="POST" class="col-6">
+                        <!-- coordonnées -->
+                        <h4>Mes coordonnées</h4>
+                        <!-- nom, prénom -->
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <input type="text" class="form-control" id="user_lastname" name="user_lastname"
+                                       placeholder="Nom" value="{% if datas.lastname %}{{ datas.lastname }}{% endif %}">
+                                {% if errors.lastname %}
+                                    <small id="user_lastname_help" class="form-text text-danger">{{ errors.lastname }}</small>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-6">
+                                <input type="text" class="form-control" id="user_firstname" name="user_firstname"
+                                       placeholder="Prénom" value="{% if datas.firstname %}{{ datas.firstname }}{% endif %}">
+                                {% if errors.firstname %}
+                                    <small id="user_firstname_help" class="form-text text-danger">{{ errors.firstname }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- email -->
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="user_mail" name="user_mail"
+                                   placeholder="nom@monmail.com" value="{% if datas.email %}{{ datas.email }}{% endif %}">
+                            {% if errors.email %}
+                                <small id="user_email_help" class="form-text text-danger">{{ errors.email }}</small>
+                            {% endif %}
+                        </div>
+                        <!-- phone -->
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="user_phone" name="user_phone"
+                                   placeholder="0642464869" value="{% if datas.phone %}{{ datas.phone }}{% endif %}">
+                            {% if errors.phone %}
+                                <small id="user_phone_help" class="form-text text-danger">{{ errors.phone }}</small>
+                            {% endif %}
+                        </div>
+                        <!-- adresse -->
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="user_adress" name="user_adress"
+                                   placeholder="1 rue d'Erstein" value="{% if datas.adress %}{{ datas.adress }}{% endif %}">
+                            {% if errors.adress %}
+                                <small id="user_adress_help" class="form-text text-danger">{{ errors.adress }}</small>
+                            {% endif %}
+                        </div>
+                        <!-- code postal, ville -->
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <input type="text" class="form-control" id="user_zip" name="user_zip"
+                                       placeholder="67000" value="{% if datas.zip %}{{ datas.zip }}{% endif %}">
+                                {% if errors.zip %}
+                                    <small id="user_zip_help" class="form-text text-danger">{{ errors.zip }}</small>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-6">
+                                <input type="text" class="form-control" id="user_city" name="user_city"
+                                       placeholder="Strasbourg" value="{% if datas.city %}{{ datas.city }}{% endif %}">
+                                {% if errors.city %}
+                                    <small id="user_city_help" class="form-text text-danger">{{ errors.city }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <button class="btn btn-primary" name="submit" value="submit">Envoyer mes données</button>
+                        </div>
+                    </form>
+                    <div class="col-12 col-sm-6">
+                        <div class="card px-5">
+                            <div class="card-body text-center">
+                               <!-- TODO check de la présence de l'email dans la DB -->
+                                <form action="/userCheck">
+                                    <h4 class="card-title mb-4">Déjà client ?</h4>
+                                    <div class="form-group col-12" >
+                                        <input type="text" class="form-control input-lg" name="known_email" placeholder="email">
+                                        {% if errors.log %}
+                                            <small id="know_user_email_help" class="form-text text-danger">{{ errors.log }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group col-12" >
+                                        <input type="text" class="form-control input-lg" name="known_phone" placeholder="téléphone">
+                                        {% if errors.log %}
+                                            <small id="known_user_phone_help" class="form-text text-danger">{{ errors.log }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary btn-lg" value="submit" type="submit" name="submit">Retrouver mes infos</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

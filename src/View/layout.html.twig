@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    {% block stylesheet %}{% endblock %}
+    <link rel="icon" href="/assets/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave+Display" rel="stylesheet">
+</head>
+<body>
+
+<header>
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#"><img class = "logotop" src="/assets/images/logo.png" alt="logo">
+    </a>
+    <button class="navbar-toggler navbar-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/home/index">Accueil<span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/about">A propos</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Menu
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% for menu in session.menusList %}
+                    <a class="dropdown-item" href="/menu/show/{{ menu.id }}">{{ menu.name }}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <li class="nav-item">
+                    <a class="nav-link" href="/reservation/reserver">Réservations</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/partenaire/partenaire">Partenariats</a>
+                </li>
+            </li>
+        </ul>
+    </div>
+</nav>
+    <div class="container-fluid">
+        <div class="row">
+            <img src="{% block image_url %} {% endblock %}">
+        </div>
+    </div>
+</header>
+
+{% block content %}{% endblock %}
+
+<footer>
+<div class="footer pt-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 text-center ">
+                <nav class="nav flex-column">
+                    <h5>Plan du site</h5>
+                    <a class="nav-link" href="/home/index">Accueil</a>
+                    <a class="nav-link" href="/home/about">A propos</a>
+                    <a class="nav-link" href="/menu/show">Menu</a>
+                    <a class="nav-link" href="/reservation/reserver">Réservations</a>
+                    <a class="nav-link" href="/partenaire/partenaire">Partenariats</a>
+                </nav>
+            </div>
+            <div class="col-md-3 text-center">
+                <nav class="nav flex-column">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <p>Retrouvez nous sur ce réseau</p>
+                        </li>
+                        <li class="nav-item p-4">
+                            <img class="insta" src="/assets/images/insta_logo.png">
+                        </li>
+                        <li class="nav-item p-4">
+                            <p>&copy; 2019 Stras'Cook. Tous droits réservés.</p>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-3 text-center">
+                <nav class="navbar">
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="nav-item">
+                            <p>Inscrivez-vous à la newsletters :</p>
+                        </div>
+                    </div>
+            </div>
+                    <form>
+                    <div class="row">
+                            <div class="col-md-12 pt-4 row">
+                                <input type="email" class="col-8" id="Email" aria-describedby="emailHelp"
+                                       placeholder="email" required>
+                                <button type="button" class="btn btn-outline-light col-4">Envoyer</button>
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-check pt-4">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" required>
+                                <label class="form-check-label small" for="defaultCheck1">
+                                    Tenez moi informé des dernières news !
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </nav>
+            </div>
+            <div class="col-md-3 text-center">
+                <nav class="nav flex-column">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <img class="logo" src="/assets/images/logo_stras'cook.png" alt="logo">
+                        </li>
+                        <li class="nav-item pt-4">
+                            <a class="nav-link" href="https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000000801164">
+                                Mentions Légales</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</footer>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+{% block javascript %}{% endblock %}
+</body>
+</html>
