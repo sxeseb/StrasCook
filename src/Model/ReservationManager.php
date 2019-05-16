@@ -21,7 +21,7 @@ class ReservationManager extends AbstractManager
         // prepared request
         $statement = $this->pdo->prepare("INSERT INTO $this->table (status, user_id, date_booked, commentaires) VALUES (
             :status, :user_id, :date_booked, :commentaire)");
-        $statement->bindValue(':status', false, \PDO::PARAM_BOOL);
+        $statement->bindValue(':status', 0, \PDO::PARAM_INT);
         $statement->bindValue(':user_id', $user_id, \PDO::PARAM_INT);
         $statement->bindValue(':date_booked', $reservation['date_booked'], \PDO::PARAM_STR);
         $statement->bindValue('commentaire', $reservation['comment'], \PDO::PARAM_STR);
@@ -30,37 +30,10 @@ class ReservationManager extends AbstractManager
         }
     }
 
-    // Actions admin
 
-    /**
-     * @param int $id
-     */
-    public function decline(int $id): void
-    {
-        // prepared request
-        $statement = $this->pdo->prepare("DELETE FROM $this->table WHERE id=:id");
-        $statement->bindValue('id', $id, \PDO::PARAM_INT);
-        $statement->execute();
-    }
+    // getters
 
-    /**
-     * @param int $id
-     * @return array
-     */
-    public function confirm(int $id) :array
-    {
-        // prepared request
-        $statement = $this->pdo->prepare("UPDATE $this->table SET `status` = :status WHERE id=:id");
-        $statement->bindValue('id', $id, \PDO::PARAM_STR);
-        $statement->bindValue('status', true, \PDO::PARAM_BOOL);
-        if ($statement->execute()) {
-            $return = $this->pdo->prepare("SELECT date_booked date_resa, id FROM $this->table WHERE id=:id");
-            $return->bindValue('id', $id, \PDO::PARAM_INT);
-            if ($return->execute()) {
-                return $return->fetch();
-            }
-        };
-    }
+    // récupération des réservations en attente
     public function reservationPending(): array
     {
         $statement = $this->pdo->query("SELECT r.id id, 
@@ -71,13 +44,15 @@ class ReservationManager extends AbstractManager
             FROM user u 
             JOIN reservation r ON u.id = r.user_id 
             JOIN orders o ON o.reservation_id = r.id 
-            WHERE r.status != 1
+            WHERE r.status = 0
             GROUP BY r.id 
             ORDER BY date_resa ASC
             ;");
 
         return $statement->fetchAll();
     }
+
+    // récupération des réservations confirmées
     public function reservationConfirmed(): array
     {
         $statement = $this->pdo->query("SELECT r.id id, 
@@ -96,6 +71,36 @@ class ReservationManager extends AbstractManager
 
         return $statement->fetchAll();
     }
+
+    // récupération des réservations passées pour affichage/stats
+    public function reservationPassed()
+    {
+        $statement = $this->pdo->query("SELECT r.id id, 
+            status,
+            date_booked date_resa,
+            SUM(o.quantity) guests, 
+            concat(zip, ' ', city) place, 
+            concat(lastname, ' ', firstname) client 
+            FROM user u 
+            JOIN reservation r ON u.id = r.user_id 
+            JOIN orders o ON o.reservation_id = r.id 
+            WHERE status = 2
+            GROUP BY r.id 
+            ORDER BY date_resa ASC, guests DESC
+            ;");
+
+        return $statement->fetchAll();
+    }
+
+    // récupération des réservations passées pour update dans la base
+    // retour id
+    public function reservationPassedId()
+    {
+        $statement = $this->pdo->query("SELECT id, status FROM $this->table WHERE date_booked < NOW() AND status != 2");
+        return $statement->fetchAll();
+    }
+
+    // details panier pour la réservation ciblée
     public function reservationOrderDetails($id): array
     {
         $statement = $this->pdo->prepare("SELECT m.name, p.cat_name categorie, price, quantity, r.date_booked
@@ -111,6 +116,8 @@ class ReservationManager extends AbstractManager
             return $statement->fetchAll();
         }
     }
+
+    // details user pour la réservation ciblée
     public function reservationDetails(int $id): array
     {
         $statement = $this->pdo->prepare("SELECT r.id id, 
@@ -128,6 +135,7 @@ class ReservationManager extends AbstractManager
             return $statement->fetch();
         }
     }
+
     public function getCountReservations(): array
     {
         $statement = $this->pdo->query("SELECT COUNT(*) pendingReservations 
@@ -151,5 +159,46 @@ class ReservationManager extends AbstractManager
             FROM $this->table WHERE status = 1");
 
         return $statement->fetchAll();
+    }
+
+
+    // Actions admin
+
+    /**
+     * @param int $id
+     */
+    public function decline(int $id): void
+    {
+        // prepared request
+        $statement = $this->pdo->prepare("DELETE FROM $this->table WHERE id=:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+    }
+
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function confirm(int $id) :array
+    {
+        // prepared request
+        $statement = $this->pdo->prepare("UPDATE $this->table SET `status` = :status WHERE id=:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_STR);
+        $statement->bindValue('status', 1, \PDO::PARAM_INT);
+        if ($statement->execute()) {
+            $return = $this->pdo->prepare("SELECT date_booked date_resa, id FROM $this->table WHERE id=:id");
+            $return->bindValue('id', $id, \PDO::PARAM_INT);
+            if ($return->execute()) {
+                return $return->fetch();
+            }
+        };
+    }
+
+    public function setPassed(int $id) :void
+    {
+        $statement = $this->pdo->prepare("UPDATE $this->table SET `status` = :status WHERE id=:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_STR);
+        $statement->bindValue('status', 2, \PDO::PARAM_INT);
+        $statement->execute();
     }
 }

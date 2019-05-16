@@ -21,8 +21,8 @@
                 {% if menupending|length > 0%}
                     <div class="card alert bg-success alert-dismissible text-center col-6 col-sm-5 px-0 pb-0">
                         <div class="card-body">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>{{ menupending|length }} reservations en attente de validation.</strong>
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>{{ menupending|length }} reservations en attente de validation.</strong>
                         </div>
                         <div class="card-footer">
                             <a class="text-white" href="/admin/reservations">Réservations en attente</a>
@@ -38,15 +38,15 @@
                 <div class="card col-12 col-sm-4 py-3">
                     <h3 class="card-title">Ma semaine</h3>
                     {% if thisweek is empty %}
-                    <div class="col-12">
-                        <div class="card-body">
-                            <p class="card-text">
-                                Pas de réservations cette semaine.
-                            </p>
+                        <div class="col-12">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    Pas de réservations cette semaine.
+                                </p>
+                            </div>
                         </div>
-                    </div>
                     {% else  %}
-                    {% for menu in thisweek %}
+                        {% for menu in thisweek %}
                             <div class="col-12">
                                 <div class="card text-center">
                                     <div class="card-header">
@@ -62,15 +62,49 @@
                                     </div>
                                 </div>
                             </div>
-                    {% endfor%}
+                        {% endfor%}
                     {% endif %}
                 </div>
                 <div class="col-12 col-sm-6">
-                    <div class="card">
+                    <h3 class="card-title">Prochaine réservation</h3>
+                    <div class="card p-5">
+                        <h4 class="card-title">Menu</h4>
+                        {% if orderDetails is not empty %}
+                            <table class="table table-borderless align-self-middle ">
+                                <tbody>
+                                {% for menu in orderDetails %}
+                                    <tr>
+                                        <td>{{ menu.name }}</td>
+                                        <td>{{ menu.categorie }}</td>
+                                        <td>{{ menu.quantity }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
 
+                        <div class="row mb-4">
+                            <h4 class="card-title">Contact client</h4>
+                            <div class="col-12">
+                                <ul class="list-group mb-4">
+                                    <a class="list-group-item list-group-item-action disabled">{{ clientDetails.client }}</a>
+                                    <a class="list-group-item list-group-item-action disabled">{{ clientDetails.phone }}</a>
+                                    <a href="mailto:{{clientDetails.email }}" target="_blank" class="list-group-item list-group-item-action text-primary">Adresse email : {{ clientDetails.email }} </a>
+                                </ul>
+                            </div>
+                        </div>
+                        {% if clientDetails.commentaires is not empty %}
+                            <div class="mt-4">
+                                <h4 class="card-title">Commentaires</h4>
+                                <div class="card-body bg-light">
+                                    <p class="card-text">{{ clientDetails.commentaires }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 {% endblock %}

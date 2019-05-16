@@ -19,6 +19,8 @@ class AdminController extends AbstractController
 {
     public function admin()
     {
+        $reservationController = new ReservationController();
+        $reservationController->updateOutdated();
         header('location: /admin/dashboard');
     }
 
@@ -47,7 +49,7 @@ class AdminController extends AbstractController
     public function logout()
     {
         unset($_SESSION['admin']);
-        header('location: /admin/login');
+        header('location: /admin/admin');
     }
 
     public function dashboard()
@@ -78,17 +80,14 @@ class AdminController extends AbstractController
             }
         }
 
+        $nextClient = $confirmed[0]['id'];
+        $clientDetails = $resaManager->reservationDetails($nextClient);
 
-
-
-
-
-
-
-
+        $orderDetails= $resaManager->reservationOrderDetails($nextClient);
 
         return $this->twig->render('Admin/dashboard.html.twig', ['menutoday'=>$confirmed,
-            'menupending'=>$resaPending, 'thisweek' => $thisWeek]);
+            'menupending'=>$resaPending, 'thisweek' => $thisWeek,
+            'order', 'orderDetails' => $orderDetails, 'clientDetails' => $clientDetails]);
     }
 
     public function reservations(int $id = null)
@@ -199,7 +198,6 @@ class AdminController extends AbstractController
         $deletemenu->deleteAllImage($id);
         if ($deletemenu ->delete($id)) {
             header('location: /admin/menus/');
-
         }
     }
 
@@ -207,7 +205,7 @@ class AdminController extends AbstractController
     {
         $deleteimage = new ImageManager();
         $idMenu = $deleteimage ->deleteOneImage($id);
-            header('location: /Admin/updateMenu/'.$idMenu);
+        header('location: /Admin/updateMenu/'.$idMenu);
     }
 
     public function updateMenu(int $id)
@@ -262,7 +260,6 @@ class AdminController extends AbstractController
                 if ($imageManager->updateImage($imageDatas, $id)) {
                     unset($_POST);
                     header('location: /Admin/updateMenu/'.$id);
-
                 }
             }
         }
@@ -289,11 +286,9 @@ class AdminController extends AbstractController
                 if ($menuManager -> addmenu($menuDatas)) {
                     unset($_POST);
                     header('location: /Admin/menus');
-
                 }
             }
         }
-
         return $this->twig->render('Admin/menuadd.html.twig');
     }
 
@@ -321,7 +316,6 @@ class AdminController extends AbstractController
                     unset($_POST);
 
                     header('location: /Admin/updateMenu/'.$id);
-
                 }
             }
         }

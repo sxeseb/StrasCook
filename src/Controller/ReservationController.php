@@ -122,4 +122,25 @@ class ReservationController extends AbstractController
             header('location: /reservation/reserver');
         }
     }
+
+    public function updateOutdated() :void
+    {
+        $resaManager = new ReservationManager();
+        $passedResa = $resaManager->reservationPassedId();
+        foreach ($passedResa as $resa) {
+            if ($resa['status'] == 0) {
+                $this->deleteOutdated($resa['id']);
+            } elseif ($resa['status'] == 1) {
+                $resaManager->setPassed($resa['id']);
+            }
+        }
+    }
+
+    public function deleteOutdated(int $id) :void
+    {
+        $ordersManager = new OrdersManager();
+        $ordersManager->delete($id);
+        $reservationManager = new ReservationManager();
+        $reservationManager->decline($id);
+    }
 }
