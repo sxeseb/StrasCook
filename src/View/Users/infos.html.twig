@@ -87,18 +87,12 @@
                         <div class="card px-5">
                             <div class="card-body text-center">
                                <!-- TODO check de la présence de l'email dans la DB -->
-                                <form action="/userCheck">
+                                <form action="/users/userCheck" method="POST">
                                     <h4 class="card-title mb-4">Déjà client ?</h4>
                                     <div class="form-group col-12" >
                                         <input type="text" class="form-control input-lg" name="known_email" placeholder="email">
-                                        {% if errors.log %}
-                                            <small id="know_user_email_help" class="form-text text-danger">{{ errors.log }}</small>
-                                        {% endif %}
-                                    </div>
-                                    <div class="form-group col-12" >
-                                        <input type="text" class="form-control input-lg" name="known_phone" placeholder="téléphone">
-                                        {% if errors.log %}
-                                            <small id="known_user_phone_help" class="form-text text-danger">{{ errors.log }}</small>
+                                        {% if errors.mail %}
+                                            <small id="know_user_email_help" class="form-text text-danger">{{ errors.mail }}</small>
                                         {% endif %}
                                     </div>
                                     <div class="col-12">

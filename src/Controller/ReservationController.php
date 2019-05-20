@@ -76,13 +76,24 @@ class ReservationController extends AbstractController
     public function validReservation($userDatas)
     {
         $userManager = new UsersManager();
-        $emailId = $userManager->insertMail($userDatas);
+
+        if (!isset($userDatas['email_id'])) {
+            $emailId = $userManager->insertMail($userDatas);
+        } else {
+            $emailId = $userDatas['email_id'];
+        }
+
         if ($emailId) {
             $_SESSION['emailConfirmation'] = $userDatas['email'];
         }
 
         // insertion user
-        $userId = $userManager->insert($userDatas, $emailId);
+        if (!isset($userDatas['id'])) {
+            $userId = $userManager->insert($userDatas, $emailId);
+        } else {
+            $userId = $userDatas['id'];
+        }
+
 
         // insertion reservation
         $date = new \DateTime($_SESSION['resaDatas']['date']);
@@ -100,7 +111,6 @@ class ReservationController extends AbstractController
         foreach ($_SESSION['cart'] as $order) {
             $orderId = $orderManager->insert($order, $resaId);
         }
-
 
         if ($emailId && $userId && $resaId) {
             unset($_SESSION['cart']);
