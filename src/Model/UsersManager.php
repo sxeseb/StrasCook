@@ -38,10 +38,19 @@ class UsersManager extends AbstractManager
     public function insertMail($datas)
     {
         $statement = $this->pdo->prepare("INSERT INTO email (email) VALUES (:email)");
-        $statement->bindValue('email', $datas['email']);
+        $statement->bindValue('email', $datas['email'], \PDO::PARAM_STR);
 
         if ($statement->execute()) {
             return (int)$this->pdo->lastInsertId();
+        }
+    }
+
+    public function checkMail($mail)
+    {
+        $statement = $this->pdo->prepare('SELECT id from email WHERE email = :mail');
+        $statement->bindValue('mail', $mail, \PDO::PARAM_STR);
+        if ($statement->execute()) {
+            return $statement->fetch();
         }
     }
 
@@ -50,8 +59,8 @@ class UsersManager extends AbstractManager
         $statement = $this->pdo->prepare("SELECT id, firstname, lastname, adress, phone, city, zip, email_id 
             FROM $this->table 
             WHERE email_id = :mailId AND phone = :phone");
-        $statement->bindValue('mailId', $mailId);
-        $statement->bindValue('phone', $phone);
+        $statement->bindValue('mailId', $mailId, \PDO::PARAM_INT);
+        $statement->bindValue('phone', $phone, \PDO::PARAM_INT);
 
         if ($statement->execute()) {
             return $statement->fetch();
