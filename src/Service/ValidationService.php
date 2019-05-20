@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Model\AdminManager;
 use App\Model\ReservationManager;
+use App\Model\UsersManager;
 
 class ValidationService
 {
@@ -289,6 +290,35 @@ class ValidationService
             }
         }
 
+        return array($errors, $datas);
+    }
+
+    public function checkKnownUser()
+    {
+        $userManager = new UsersManager();
+        $errors = [];
+        $datas = [];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (!isset($_POST['known_email']) || empty($_POST['known_email'])) {
+                $errors['mail'] = 'Veuillez saisir votre adresse email';
+            } elseif (!preg_match(
+                "/^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/",
+                $_POST['known_email']
+            )) {
+                $errors['mail'] = "Email non valide";
+            } else {
+                $datas['mail'] = $this->testInput($_POST['known_email']);
+            }
+
+            if (empty($errors)) {
+                if (!$emailToCheck = $userManager->checkMail($datas['mail'])) {
+                    $errors['mail'] = "Adresse email non trouvée";
+                } else {
+                    $datas = $userManager->getUserInfos($emailToCheck);
+                }
+            }
+        }
         return array($errors, $datas);
     }
 

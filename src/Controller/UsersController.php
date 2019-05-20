@@ -32,4 +32,28 @@ class UsersController extends AbstractController
         }
         return $this->twig->render('Users/infos.html.twig');
     }
+
+    public function userCheck()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $validator = new ValidationService();
+            $output = $validator->checkKnownUser();
+            list($errors, $datas) = $output;
+            if (!empty($errors)) {
+                return $this->twig->render(
+                    'Users/infos.html.twig',
+                    ['errors' => $errors, 'datas' => $datas]
+                );
+            } else {
+                $userManager = new UsersManager();
+                $insertController = new ReservationController();
+                $userDatas = $userManager->getUserInfos($datas['id']);
+                if ($insertController->validReservation($userDatas)) {
+                    header('location: /reservation/success');
+                } else {
+                    header('location: /reservation/error');
+                }
+            }
+        }
+    }
 }

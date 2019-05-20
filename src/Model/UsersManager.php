@@ -54,14 +54,16 @@ class UsersManager extends AbstractManager
         }
     }
 
-    public function getUserInfos($mailId, $phone)
+    public function getUserInfos($mailId)
     {
-        $statement = $this->pdo->prepare("SELECT id, firstname, lastname, adress, phone, city, zip, email_id 
-            FROM $this->table 
-            WHERE email_id = :mailId AND phone = :phone");
+        $statement = $this->pdo->prepare(
+            "SELECT u.id id, firstname, lastname, adress, phone, city, zip, email_id, email 
+            FROM $this->table u
+            JOIN email e 
+            ON e.id =  u.email_id
+            WHERE email_id = :mailId"
+        );
         $statement->bindValue('mailId', $mailId, \PDO::PARAM_INT);
-        $statement->bindValue('phone', $phone, \PDO::PARAM_INT);
-
         if ($statement->execute()) {
             return $statement->fetch();
         }
