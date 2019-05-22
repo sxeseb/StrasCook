@@ -21,6 +21,9 @@ class HomeController extends AbstractController
      */
     public function index()
     {
+        if (isset($_SESSION['admin'])) {
+            unset($_SESSION['admin']);
+        }
         $menumanager = new MenuManager();
         $_SESSION['menusList'] = $menumanager->selectAllMenus();
         return $this->twig->render('Home/index.html.twig');
@@ -28,6 +31,9 @@ class HomeController extends AbstractController
 
     public function about()
     {
+        if (isset($_SESSION['admin'])) {
+            unset($_SESSION['admin']);
+        }
         return $this->twig->render('Home/propos.html.twig');
     }
 }

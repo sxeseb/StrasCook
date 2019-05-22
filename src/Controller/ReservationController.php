@@ -14,6 +14,10 @@ class ReservationController extends AbstractController
 {
     public function reserver()
     {
+        if (isset($_SESSION['admin'])) {
+            unset($_SESSION['admin']);
+        }
+
         if (isset($_SESSION['emailConfirmation'])) {
             unset($_SESSION['emailConfirmation']);
         }
