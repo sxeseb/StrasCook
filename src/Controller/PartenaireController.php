@@ -21,6 +21,9 @@ class PartenaireController extends AbstractController
      */
     public function partenaire()
     {
+        if (isset($_SESSION['admin'])) {
+            unset($_SESSION['admin']);
+        }
         $partManager = new PartenaireManager();
         $partenaire = $partManager -> selectAllPart();
         return $this->twig->render('Partenaire/partenaire.html.twig', ['partenaires' => $partenaire]);
