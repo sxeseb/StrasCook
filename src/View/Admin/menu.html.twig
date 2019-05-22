@@ -8,7 +8,7 @@
     <div class="container py-5">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1>Menus</h1>
+                <h1 class="font-weight-light">Menus</h1>
             </div>
         </div>
     </div>
@@ -28,11 +28,11 @@
                     {% for menu in menus %}
                     <tr>
                         <th scope="row">{{ menu.id }}</th>
-                        <td><img class="thumbnail" src="{{menu.img_src}}" alt="image_menu"></td>
+                        <td><img class="img-thumbnail w-50" src="{{menu.img_src}}" alt="image_menu"></td>
                         <td>{{ menu.name }}</td>
                         <td>{{ menu.description }}</td>
-                        <td><a type="button" class="btn btn-outline-light" href="/Admin/updateMenu/{{ menu.id }}">Edit</a></td>
-                        <td><a type="button" class="btn btn-outline-light" href="/Admin/delete/{{ menu.id }}">Delete</a></td>
+                        <td><a class="btn btn-warning btn-sm" href="/Admin/updateMenu/{{ menu.id }}">Edit</a></td>
+                        <td><a class="btn btn-danger btn-sm" href="/Admin/delete/{{ menu.id }}">Delete</a></td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -40,8 +40,8 @@
             </div>
         </div>
         <div class="row pb-3 pt-3">
-            <div class="col-md-12">
-                <a type="button" class="btn btn-secondary" href="/Admin/addMenu/">Ajouter</a>
+            <div class="col-md-12 d-flex justify-content-end">
+                <a class="btn btn-success" href="/Admin/addMenu/">Ajouter un menu</a>
             </div>
         </div>
     </div>
