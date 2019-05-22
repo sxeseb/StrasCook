@@ -1,6 +1,7 @@
 body
 {
     background-color: seashell;
+    overflow-x: hidden;
 }
 
 .container
