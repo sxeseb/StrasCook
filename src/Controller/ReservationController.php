@@ -18,6 +18,13 @@ class ReservationController extends AbstractController
             unset($_SESSION['emailConfirmation']);
         }
 
+        $resaManager = new ReservationManager();
+        $dateBooked = $resaManager->getAllConfirmedDates();
+        $dateBooked = json_encode($dateBooked);
+
+        $today = new \DateTime('now');
+        $today = $today->format('Y-m-d');
+
         $menuManager = new MenuManager();
         $menus = $menuManager->selectAllMenus();
 
@@ -46,7 +53,9 @@ class ReservationController extends AbstractController
                     'count' => $count, 'errors' => $resaErrors, 'cartDatas' => $cartDatas]
             );
         } else {
-            return $this->twig->render('Reservations/reserver.html.twig', ['menus' => $menus]);
+            return $this->twig->render('Reservations/reserver.html.twig', [
+                'menus' => $menus, 'today'=> $today, 'dates' => $dateBooked
+            ]);
         }
     }
 
