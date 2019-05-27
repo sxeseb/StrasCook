@@ -20,7 +20,6 @@ class ReservationController extends AbstractController
 
         $resaManager = new ReservationManager();
         $dateBooked = $resaManager->getAllConfirmedDates();
-        $dateBooked = json_encode($dateBooked);
 
         $today = new \DateTime('now');
         $today = $today->format('Y-m-d');
@@ -50,7 +49,11 @@ class ReservationController extends AbstractController
             return $this->twig->render(
                 'Reservations/reserver.html.twig',
                 ['menus' => $menus, 'panier' => $panier,
-                    'count' => $count, 'errors' => $resaErrors, 'cartDatas' => $cartDatas]
+                    'count' => $count,
+                    'errors' => $resaErrors,
+                    'cartDatas' => $cartDatas,
+                    'today'=> $today,
+                    'dates' => $dateBooked]
             );
         } else {
             return $this->twig->render('Reservations/reserver.html.twig', [
