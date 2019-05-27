@@ -1,7 +1,10 @@
 {%  extends 'layout.html.twig' %}
 
 {% block title %} Stras'Cook - Reserver une prestation {% endblock %}
-{% block stylesheet %}<link href="/assets/css/cart.css" rel="stylesheet" type="text/css"> {% endblock %}
+{% block stylesheet %}
+    <link href="/assets/css/cart.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
+{% endblock %}
 {% block image_url %}/assets/images/banner.jpg{%  endblock %}
 
 {% block content %}
@@ -148,16 +151,14 @@
         dates.push(date.date_resa);
     });
 
-    console.log(dates);
-
+    flatpickr.localize(flatpickr.l10ns.fr);
     let optional_config = {
         minDate: {{ today|json_encode|raw }},
         disable: dates,
         altInput: true,
-        altFormat: "F j, Y",
+        altFormat: "l j F Y",
         dateFormat: "Y-m-d",
     };
     $("#datepicker").flatpickr(optional_config);
-
 </script>
 {% endblock %}
