@@ -1,7 +1,10 @@
 {%  extends 'layout.html.twig' %}
 
 {% block title %} Stras'Cook - Reserver une prestation {% endblock %}
-{% block stylesheet %}<link href="/assets/css/cart.css" rel="stylesheet" type="text/css"> {% endblock %}
+{% block stylesheet %}
+    <link href="/assets/css/cart.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
+{% endblock %}
 {% block image_url %}/assets/images/banner.jpg{%  endblock %}
 
 {% block content %}
@@ -21,9 +24,6 @@
             </div>
             <div class="row">
                 <div class="form col-12 col-sm-7 offset-sm-1">
-                    <!-- Selection des plats -->
-                    <!-- Le contenu sera placé dans un panier via Javacript -->
-
                     <h4>Mon choix de menus</h4>
                     <div class="form-group">
                         {% for menu in menus %}
@@ -78,7 +78,9 @@
                             <div class="col-12 mb-2 ">
                                 <h4>Ma réservation</h4>
                                 <div class="form-group">
-                                    <input class="form-control" name="selected_date" type="date" value="{{ cartDatas.date }}">
+                                    <div class="input-group date">
+                                        <input id="datepicker" type="text" class="form-control datetimepicker-input" name="selected_date" value="{{ cartDatas.date }}"/>
+                                    </div>
                                     {% if errors is defined and errors is not empty %} <p class="form-text"><small class="text-danger">{{ errors.date }}</small></p> {% endif %}
                                 </div>
                                 <div class="form-group">
@@ -142,6 +144,21 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="/assets/script/cart.js" type="text/javascript"></script>
+<script type="text/javascript">
+    let disabledDays = {{ dates|json_encode|raw }};
+    let dates = [];
+    disabledDays.forEach(function(date) {
+        dates.push(date.date_resa);
+    });
 
+    flatpickr.localize(flatpickr.l10ns.fr);
+    let optional_config = {
+        minDate: {{ today|json_encode|raw }},
+        disable: dates,
+        altInput: true,
+        altFormat: "l j F Y",
+        dateFormat: "Y-m-d",
+    };
+    $("#datepicker").flatpickr(optional_config);
+</script>
 {% endblock %}
